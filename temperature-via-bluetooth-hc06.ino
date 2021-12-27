@@ -9,10 +9,7 @@ int Data;
 SoftwareSerial BTserial(10, 9); // RX 10 - TX 9;
 #define DHT11_PIN 4
 
-// Bucata semifunctionala pentru temperatura - parte declarativa initiala
-//#include <dht11.h>
-//#define DHT11PIN 4
-//dht11 DHT11;
+
 
 // Declarare Task-uri
 void TaskTrimitereDate( void *pvParameters );
