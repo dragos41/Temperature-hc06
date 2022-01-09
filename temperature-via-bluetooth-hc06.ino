@@ -57,8 +57,10 @@ void TaskTrimitereDate(void *pvParameters)  {
     Serial.write(transmitere);
     Serial.println();
     Serial.println("Waiting for command...");
-     vTaskDelay(4000 / portTICK_PERIOD_MS );//
+    xSemaphoreGive(xBinarySemaphore);
+     vTaskDelay(10);
     if (BTserial.available()) { //wait for data received
+      xSemaphoreTake(xBinarySemaphore, 5);
       Data = BTserial.read();
       if (Data == '1') {
         BTserial.print("Temperatura este: ");
@@ -69,35 +71,37 @@ void TaskTrimitereDate(void *pvParameters)  {
         digitalWrite(7, HIGH);
         BTserial.print("LED Verde Aprins ");
         Serial.println("LED Verde Aprins ");
-        //delay(100);
+       
       }
       else if (Data == '3') {
         digitalWrite(6, HIGH);
         BTserial.print("LED Rosu Aprins ");
         Serial.println("LED Rosu Aprins ");
-        //delay(100);
+      
       }
     else if (Data == '4') {
       digitalWrite(7, LOW);
       digitalWrite(6, LOW);
       BTserial.print("LED-uri stinse ");
       Serial.println("LED-uri stinse ");
-     // delay(100);
+ 
      }
      xSemaphoreGive(xBinarySemaphore);
+     vTaskDelay(10);
     }
-    vTaskDelay(500 / portTICK_PERIOD_MS ); // 500
+      vTaskDelay(500 / portTICK_PERIOD_MS );
   }
 }
 
 void TaskCitireTemperatura(void *pvParameters)  {
   while (1)
   { xSemaphoreTake(xBinarySemaphore, 5);
-    delay(1500); // 1500
+    vTaskDelay(1500 / portTICK_PERIOD_MS );
     int chk = DHT.read11(DHT11_PIN);
     temperatureData = DHT.temperature; // citeste valoarea de temperatura de pe senzor
   
       xSemaphoreGive(xBinarySemaphore);
+      vTaskDelay(10);
   }
 
 }
