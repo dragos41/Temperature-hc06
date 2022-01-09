@@ -54,9 +54,6 @@ void TaskTrimitereDate(void *pvParameters)  {
   while (1)
   {xSemaphoreTake(xBinarySemaphore, 5);
     sprintf(transmitere, "Temperatura:%d", temperatureData);
-   xSemaphoreGive(xBinarySemaphore);
-   vTaskDelay(10);
-   xSemaphoreTake(xBinarySemaphore, 5);
     Serial.write(transmitere);
     Serial.println();
     Serial.println("Waiting for command...");
