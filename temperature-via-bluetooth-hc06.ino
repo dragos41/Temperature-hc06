@@ -70,9 +70,9 @@ void TaskTrimitereDate(void *pvParameters)  {
            xSemaphoreTake(xBinarySemaphore, 5);
         BTserial.print(temperatureData);
            xSemaphoreGive(xBinarySemaphore);
-
+            vTaskDelay(10);
         BTserial.println();
-     vTaskDelay(10);
+ 
       }
       else if (Data == '2') {
         
